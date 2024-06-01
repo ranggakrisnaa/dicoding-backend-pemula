@@ -54,14 +54,14 @@ module.exports = {
         if (index === -1) throw Boom.notFound('Gagal memperbarui buku. Id tidak ditemukan')
         const updatedBook = {
             id: storage[index].id,
-            name: reqPayload.name,
-            pageCount: reqPayload.pageCount,
-            readPage: reqPayload.readPage,
-            finished: reqPayload.finished || storage[index].finished,
+            insertedAt: storage[index].insertedAt,
+            finished: storage[index].finished,
+            updatedAt: new Date().toISOString(),
+            ...reqPayload
         };
 
-        storage.splice(index, 0, updatedBook)
-        return payload
+        storage.splice(index, 1, updatedBook)
+        return updatedBook
     },
     deleteBook: async (id) => {
         const index = storage.findIndex(book => book.id === id);

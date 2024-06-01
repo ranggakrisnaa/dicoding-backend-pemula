@@ -38,6 +38,7 @@ module.exports = {
 
             return h.response({ status: "success", message: "Buku berhasil diperbarui" }).code(200);
         } catch (error) {
+            console.log(error);
             throw error
         }
     },
