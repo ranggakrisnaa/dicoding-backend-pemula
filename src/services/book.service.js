@@ -38,17 +38,17 @@ module.exports = {
 
         console.log(findIndex);
 
-        return storage[findIndex] || storage
+        return storage[findIndex] || storage.map(data => { return { id: data.id, name: data.name, publisher: data.publisher } })
     },
     getBookById: async (id) => {
         const index = storage.findIndex(book => book.id === id);
-        if (index === -1) throw Boom.notFound('Buku gagal dihapus. Id tidak ditemukan')
+        if (index === -1) throw Boom.notFound('Buku tidak ditemukan')
 
         return storage[index]
     },
     updateBook: async (reqPayload, id) => {
-        if (!reqPayload.name) throw Boom.badRequest('Gagal menambahkan buku. Mohon isi nama buku')
-        if (reqPayload.readPage > reqPayload.pageCount) throw Boom.badRequest('Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount')
+        if (!reqPayload.name) throw Boom.badRequest('Gagal memperbarui buku. Mohon isi nama buku')
+        if (reqPayload.readPage > reqPayload.pageCount) throw Boom.badRequest('Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount')
 
         const index = storage.findIndex(book => book.id === id);
         if (index === -1) throw Boom.notFound('Gagal memperbarui buku. Id tidak ditemukan')
